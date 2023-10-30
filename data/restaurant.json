@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Test",
+    "address": "Teststreet 5, Testcity",
+    "cuisine": "italian",
+    "website": "https://mytest.com",
+    "description": "It's awesome!"
+  },
+  {
+    "name": "Test2",
+    "address": "Teststreet 10, Testcity2",
+    "cuisine": "Indian",
+    "website": "https://mygreattest.com",
+    "description": "It's also amazing!"
+  },
+  {
+    "name": "Test3",
+    "address": "awesomestreet 10, tiktaktocity3",
+    "cuisine": "korean",
+    "website": "https://mygreattestgjo.com",
+    "description": "There's nothing else more than this!"
+  }
+]

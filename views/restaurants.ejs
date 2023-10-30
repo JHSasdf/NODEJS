@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('includes/head') %>
+    <link rel="stylesheet" href="styles/restaurants.css" />
+  </head>
+  <body>
+    <%- include('includes/header', {}) %>
+    <!-- 렌더링 구문, 상대경로 가능. 삽입된 것을 HTML 콘텐츠로 처리, 동적 데이터가 있다면 res.render처럼 처리 가능 -->
+    <%- include('includes/aside') %>
+    <main>
+      <h1>Recommended restaurants</h1>
+      <% if (numberOfRestaurants ===0) { %>
+
+      <p>
+        Unfortunately, we have no restaurants yet - maybe start recommending
+        some?
+      </p>
+      <% } else { %>
+      <p>Find your next favorite restaurants with help of our other users!</p>
+      <p>We found <%= numberOfRestaurants %> restaurants.</p>
+      <!-- numberOfRestaurants라는 value를 escape 해서 출력값을 원시 text로 처리함 -->
+      <ul id="restaurants-list">
+        <% for (const restaurant of restaurants) { %>
+        <!-- restaurants 객체는 app.js render로 전달할 numberOfRestaurant 옆에 있음 toredRestaurant값에 할당됨
+        단일 값 이용할때는 =가 들어가고 배열 값 이용할 때는 =가 없음
+      -->
+        <%- include('includes/restaurants/restaurant-item', {restaurant:
+        restaurant}) %>
+        <!-- 첫 번쨰 restaurant는 restaurant-item.ejs에서 쓰이는 key 이름을 정한 것, 두 번쨰 restaurant 값은 위에 for문에 있는 restaurant 값임. 뒤의 restaurants 값은 app.js의 render함수에 있음 -->
+
+        <% } %>
+      </ul>
+      <% } %>
+    </main>
+  </body>
+</html>
