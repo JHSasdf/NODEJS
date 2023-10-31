@@ -1,5 +1,6 @@
 [
   {
+    "id": "r1",
     "name": "Test",
     "address": "Teststreet 5, Testcity",
     "cuisine": "italian",
@@ -7,6 +8,7 @@
     "description": "It's awesome!"
   },
   {
+    "id": "r2",
     "name": "Test2",
     "address": "Teststreet 10, Testcity2",
     "cuisine": "Indian",
@@ -14,10 +16,19 @@
     "description": "It's also amazing!"
   },
   {
+    "id": "r3",
     "name": "Test3",
     "address": "awesomestreet 10, tiktaktocity3",
     "cuisine": "korean",
     "website": "https://mygreattestgjo.com",
     "description": "There's nothing else more than this!"
+  },
+  {
+    "name": "kimBobHeaven",
+    "address": "kyonghee-univ",
+    "cuisine": "Japanese",
+    "website": "https://realtest.com",
+    "description": "cause it's awesome!",
+    "id": "7f626be9-3675-4426-9d8e-0b5621a381b7"
   }
 ]

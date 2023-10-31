@@ -1,16 +1,17 @@
-const express = require("express");
+const express = require("express"); // 타사 패키지 사용 참조 선언 (import)
 const path = require("path");
 const fs = require("fs");
+const uuid = require("uuid");
 
 const app = express();
 
-app.set("views", path.join(__dirname, "views")); // 2번째 view는 폴더이름 views
+app.set("views", path.join(__dirname, "views")); // 첫번째 views는 view engine 쓰겠다는 말, 2번째 view는 폴더이름 views
 app.set("view engine", "ejs");
 // express 앱에 대한 특정 option을 설정할 수 있음
 // ejs 파일이 view engine을 통해 browser에서 받는 html content로 parse되고 templeate engine을 이용해서 동적으로 삽입 되는 것.
 
 app.get("/", function (req, res) {
-  res.render('index'); // 파일 확장자 생략
+  res.render("index"); // 파일 확장자 생략
   //parse template engine, rendering, convert to html and send to the browser
 
   // const htmlFilePath = path.join(__dirname, 'views', 'index.html')
@@ -22,40 +23,58 @@ app.use(express.static("public")); // 터미널 경로의 public 폴더의 stati
 app.use(express.urlencoded({ extended: false }));
 
 app.get("/restaurants", function (req, res) {
-  const filePath = path.join(__dirname, 'data', 'restaurant.json');
-  
+  const filePath = path.join(__dirname, "data", "restaurant.json");
+
   const fileData = fs.readFileSync(filePath);
   const storedRestaurant = JSON.parse(fileData);
 
-  res.render('restaurants', { numberOfRestaurants: storedRestaurant.length, restaurants: storedRestaurant});
+  res.render("restaurants", {
+    numberOfRestaurants: storedRestaurant.length,
+    restaurants: storedRestaurant,
+  });
   // storedRestaurant는 배열이기 때문에 length 값 출력 가능
 
-
   // 해당 템플릿에 동적 html 코드가 있으면 두번째 parameter가 필요함. 템플릿에서 참조하는 variable, placeholder 등의 자바스크립트 객체 전달 가능
-  
 
   // const htmlFilePath = path.join(__dirname, "views", "restaurants.html");
   // res.sendFile(htmlFilePath);
 });
 
+app.get("/restaurants/:id", function (req, res) {
+  // /restaurants.r1, 동적으로 /restaurants/id에 들어갈 id 생성 가능...
+  const restaurantId = req.params.id; // id 값을 restaurantId에 넣음
+  const filePath = path.join(__dirname, "data", "restaurant.json");
+
+  const fileData = fs.readFileSync(filePath);
+  const storedRestaurant = JSON.parse(fileData);
+  for (const restaurant of storedRestaurant) {
+    if (restaurant.id === restaurantId) {
+      return res.render("restaurant-detail", { /*rid: restaurantId,*/ restaurant: restaurant }); // 주소에 동적으로 값을 넣으면 주소를 알아서 생성하고 해당 id 값을 변수로 사용 가능.
+      // get의 URL에서 :id를 해서 params.id key가 있음.
+    }
+  }
+});
+
 app.get("/about", function (req, res) {
-  res.render('about');
+  res.render("about");
 });
 
 app.get("/confirm", function (req, res) {
-  res.render('confirm');
+  res.render("confirm");
 });
 
 app.get("/recommend", function (req, res) {
-  
-  res.render('recommend');
-  
-   // const htmlFilePath = path.join(__dirname, "views", "recommend.html");
+  res.render("recommend");
+
+  // const htmlFilePath = path.join(__dirname, "views", "recommend.html");
   // res.sendFile(htmlFilePath);
 });
 
 app.post("/recommend", function (req, res) {
   const restaurant = req.body;
+  restaurant.id = uuid.v4(); // string
+  // js는 object에서 존재하지 않는 property (key) 값을 호출하면 자동으로 생성해줌.
+
   const filePath = path.join(__dirname, "data", "restaurant.json");
 
   const fileData = fs.readFileSync(filePath);
