@@ -5,7 +5,11 @@ const express = require('express') //express 패키지 요청
 
 const app = express();  // express mothod 호출해서 app 객체 생성
 
-app.use(express.urlencoded({extended: false})); // urlencoded: body parser를 설정하는 method, urlencoded가 찾는 데이터가 들어오면 구문 분석해서 자바스크립트 객체로 변환
+// app.use() 들어오는 모든 요청에 대한 실행하는 함수를 등록하는 구문.
+
+app.use(express.urlencoded({extended: false})); // app 객체를 생성한 후 해야함.
+// urlencoded: body parser를 설정하는 method로, urlencoded가 찾는 데이터가 들어오면 구문 분석해서 자바스크립트 객체로 변환함/
+// json data는 js를 문법을 닮은 원시 데이터이기 때문에 js에서 이용할 수 있게 parsing해야함.
 
 app.get('/currenttime', function(req, res) { // request: 들어오는 요청에 대한 추가정보 제공, responce: 들어온 요청에 대한 응답을 준비하는 기능
   res.send("<h1>" + new Date().toISOString() + "</h1>");
