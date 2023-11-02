@@ -20,6 +20,14 @@
       <p>Find your next favorite restaurants with help of our other users!</p>
       <p>We found <%= numberOfRestaurants %> restaurants.</p>
       <!-- numberOfRestaurants라는 value를 escape 해서 출력값을 원시 text로 처리함 -->
+
+        <form action="/restaurants" method="GET">
+          <input type="hidden" value="<%= nextOrder %>" name="order">
+          <button class="btn">Change Order</button>
+        </form>
+        <!-- 미들웨어 함수와 라우터 함수를 통과할 때는 쿼리 매개변수는 무시됨. (? name=value 값). -->
+        <!-- 하지만 서버측 코드에서는 인식됨. -->
+
       <ul id="restaurants-list">
         <% for (const restaurant of restaurants) { %>
         <!-- restaurants 객체는 app.js render로 전달할 numberOfRestaurant 옆에 있음 toredRestaurant값에 할당됨
